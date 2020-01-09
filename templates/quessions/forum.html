@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for q in qq %}
+<h1>{{q.name}}</h1>
+<h2>{{q.author}}</h2>
+<h5>{{q.body}}</h5>
+<h6>{{q.likes}}{{q.views}}</h6>
+    {% for i in q.tags_list %}
+        <a href="{{i.get_absolute_url}}">{{i}}</a>
+    {% endfor %}
+
+{% endfor %}
+
+{% endblock content %}

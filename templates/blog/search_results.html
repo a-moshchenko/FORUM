@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for post in object_list %}
+<div class="">
+    {% if post.status %}
+    <h1>{{post.title}}</h1>
+    <h4>{{post.author}}</h4>
+    <h4>{{post.theme}}</h4>
+    <h5>{{post.created}}</h5>
+    <h4>{{post.content}}</h4>
+    <img src="{{ post.image.url }}" width="200" height="100" alt="">
+    {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

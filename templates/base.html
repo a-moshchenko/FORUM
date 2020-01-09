@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>forum</title>
+        <div class="nav">
+            <a href="{% url 'home' %}"> <h1>LOGO</h1>  </a>
+            <a href="{% url 'forum' %}" >Форум</a>
+            <a href="{% url 'books' %}" >Книги</a>
+            <a href="{% url 'contacts' %}" >Контакты</a>
+            <form action="{% url 'search' %}" method="get">
+  <input type="text" placeholder="Search.." name="q">
+</form>
+        </div>
+    </head>
+    <body>
+        {% block themes %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>
