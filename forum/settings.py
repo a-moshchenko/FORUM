@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'my_forum',
     'books',
     'contacts',
-    'quesions',
+    'questions',
+    # instaled
+    'taggit',
 ]
 
 MIDDLEWARE = [

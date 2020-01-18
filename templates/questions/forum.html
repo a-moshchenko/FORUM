@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for q in qq %}
+<h6>Опубликован{{q.time_since_publication}} назад</h6>
+<h1>{{q.name}}</h1>
+<a href="{{ q.get_absolute_url }}">{{q.name}}</a>
+<h2>{{q.author}}</h2>
+<h5>{{q.body}}</h5>
+<p>
+<h6>{{q.likes}} лайков</h6>
+<a href="#">Like</a>
+<a href="{% url 'new_question' %}">new</a>
+</p>
+<h5>{{q.views}}</h5>
+    {% for i in q.tags.names %}
+        <a href="">{{i}}</a>
+    {% endfor %}
+
+{% endfor %}
+
+{% endblock content %}

@@ -23,7 +23,7 @@ urlpatterns = [
     path('blog/', include('my_forum.urls')),
     path('book/', include('books.urls')),
     path('contacts/', include('contacts.urls')),
-    path('quesions/', include('quesions.urls')),
+    path('questions/', include('questions.urls')),
 ]
 
 
