@@ -6,4 +6,3 @@ class CreatedQuestionsForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ['name', 'author', 'body', 'tags']
-

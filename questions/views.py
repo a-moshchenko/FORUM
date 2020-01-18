@@ -3,8 +3,7 @@ from .models import Question
 from django.shortcuts import get_object_or_404
 from django.db.models import F
 from .forms import CreatedQuestionsForm
-from django.template.defaultfilters import slugify
-from django.utils import timezone
+
 
 def questions_list(request, tags_name=None):
     tag = None
@@ -29,4 +28,3 @@ def question_new(request):
     else:
         form = CreatedQuestionsForm()
     return render(request, 'questions/new.html', {'form': form})
-

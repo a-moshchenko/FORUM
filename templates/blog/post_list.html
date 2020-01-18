@@ -5,16 +5,24 @@
 
 
         {% for post in posts %}
-        <div class="">
-
-        <h1>{{post.title}}</h1>
-        <h4>{{post.author}}</h4>
-        <h5>{{post.created}}</h5>
-        <h4>{{post.content}}</h4>
-        <img src="{{ post.image.url }}" width="200" height="100" alt="">
+        <div class="post">
+        <div class="post-image">
+          <img src="{{ post.image.url }}" width="500" alt="">
+        </div>
+        <div class="post-info">
+          <h1>{{post.title}}</h1>
+          <h6>{{post.created}}</h6>
+          <h3>{{post.content}}</h3>
+          <div class="post-read">
+            <a href="{{post.get_absolute_url}}">далее </a>
+          </div>
+          <div class="tag">
             <a href="{{post.theme.get_absolute_url}}">#{{post.theme}}</a>
+          </div>
+        </div>
+
+        </div>
 
 
-    </div>
     {% endfor %}
     {% endblock %}

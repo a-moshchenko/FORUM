@@ -1,22 +1,43 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html>
     <head>
         <meta charset="utf-8">
         <title>forum</title>
-        <div class="nav">
-            <a href="{% url 'home' %}"> <h1>LOGO</h1>  </a>
-            <a href="{% url 'forum' %}" >Форум</a>
-            <a href="{% url 'books' %}" >Книги</a>
-            <a href="{% url 'contacts' %}" >Контакты</a>
-            <form action="{% url 'search' %}" method="get">
-  <input type="text" placeholder="Search.." name="q">
-</form>
-        </div>
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Press+Start+2P&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/master.css' %}">
     </head>
     <body>
-        {% block themes %}
-        {% endblock %}
+
+      <header class="header">
+        <div class="container">
+          <div class="header-inner">
+            <div class="header-logo">
+            <a href="{% url 'home' %}"><h1>DevTime</h1><a/>
+            </div>
+                <nav class="nav">
+                  <a class="nav-link" href="{% url 'home' %}" >Блог</a>
+                  <a class="nav-link" href="{% url 'forum' %}" >Форум</a>
+                  <a class="nav-link" href="{% url 'books' %}" >Книги</a>
+                  <a class="nav-link" href="{% url 'contacts' %}" >Контакты</a>
+                </nav>
+                <div class="search">
+                <form action="{% url 'search' %}" method="get">
+                  <input type="text" placeholder="Поиск..." name="q">
+                </form>
+              </div>
+
+              </div>
+            </div>
+      </header>
+
+
+
+      <div class="intro">
+        <div class="container">
         {% block content %}
         {% endblock %}
+      </div>
+  </div>
     </body>
 </html>
