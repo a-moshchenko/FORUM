@@ -3,10 +3,18 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 # from django.db.models import F
-from  taggit.managers import TaggableManager
+from taggit.managers import TaggableManager
 
 
-class Question(models.Model):
+class GetTagListMixin():
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('tags')
+
+    def tag_list(self, obj):
+        return u", ".join(o.name for o in obj.tags.all())
+
+
+class Question(models.Model, GetTagListMixin):
     name = models.CharField(max_length=100, verbose_name='вопрос')
     body = models.TextField(verbose_name='описание')
     author = models.ForeignKey(User, on_delete=models.CASCADE,
@@ -28,9 +36,8 @@ class Question(models.Model):
     def get_absolute_url(self):
         return reverse('detail', args=[self.id])
 
-    def get_absolut_url_for_tags(self, name):
+    def get_absolut_url_for_tags(self):
         return reverse()
-
 
     def time_since_publication(self):
         time = (timezone.now() - self.created) // 60

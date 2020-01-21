@@ -13,8 +13,8 @@
 <a href="{% url 'new_question' %}">new</a>
 </p>
 <h5>{{q.views}}</h5>
-    {% for i in q.tags.names %}
-        <a href="">#{{i}}</a>
+    {% for tag in q.tags.names %}
+        <a href="{% url 'forum_for_tag' tags_name=tag %}">#{{tag}}</a>
     {% endfor %}
 
 {% endfor %}

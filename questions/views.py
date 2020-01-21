@@ -6,10 +6,9 @@ from .forms import CreatedQuestionsForm
 
 
 def questions_list(request, tags_name=None):
-    tag = None
     question_list = Question.objects.all()
     if tags_name:
-        question_list = question_list.filter(tags=tag)
+        question_list = Question.objects.filter(tags__name__in=[tags_name])
     return render(request, 'questions/forum.html', {'qq': question_list})
 
 
