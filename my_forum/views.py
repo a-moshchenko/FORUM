@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 
-def get_postlist(request, theme_slug=None):
+def postlist(request, theme_slug=None):
     theme = None
     themes = Theme.objects.all()
     posts = ForumPost.objects.filter(status=1).order_by('-created')
@@ -25,3 +25,8 @@ def search_result_view(request):
         }
 
     return render(request, 'blog/search_results.html', context)
+
+
+def post_detail(request, slug):
+    post = get_object_or_404(ForumPost, slug=slug)
+    return render(request, 'blog/detail.html', {'post': post})

@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <title>forum</title>
-        <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow|Press+Start+2P&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Frijole|Tenor+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/master.css' %}">
     </head>
     <body>
@@ -13,7 +13,7 @@
         <div class="container">
           <div class="header-inner">
             <div class="header-logo">
-            <a href="{% url 'home' %}"><h1>DevTime</h1><a/>
+            <a href="{% url 'home' %}">DevTime<a/>
             </div>
                 <nav class="nav">
                   <a class="nav-link" href="{% url 'home' %}" >Блог</a>
@@ -35,8 +35,11 @@
 
       <div class="intro">
         <div class="container">
+            <div class="grid-container">
+
         {% block content %}
         {% endblock %}
+            </div>
       </div>
   </div>
     </body>
