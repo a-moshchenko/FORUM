@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question
+from .models import Question, Comment, Answer
 from .models import GetTagListMixin
 
 
@@ -9,3 +9,7 @@ class QuestionAdmin(admin.ModelAdmin, GetTagListMixin):
         'id', 'name', 'author', 'likes', 'views', 'tag_list',
         'time_since_publication'
     ]
+
+
+admin.site.register(Comment)
+admin.site.register(Answer)

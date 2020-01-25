@@ -63,3 +63,34 @@ class Question(models.Model, GetTagListMixin):
                             name = 'лет'
 
         return f' {time.seconds} {name} '
+
+
+class Answer(models.Model):
+    author = models.CharField(max_length=60, verbose_name='автор')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE,
+                                 verbose_name='вопрос')
+    code = models.TextField(verbose_name='пример кода', blank=True)
+    image = models.ImageField(upload_to='answer_img')
+    create_on = models.DateTimeField(auto_now_add=True, verbose_name='создан')
+    update_on = models.DateTimeField(auto_now=True, verbose_name='обновлен')
+
+    def __str__(self):
+        return f' ответ {self.author}'
+
+
+class Comment(models.Model):
+    comment = models.ForeignKey('self', on_delete=models.CASCADE, blank=True,
+                                related_name='comment_for_self')
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, blank=True
+    )
+    answer = models.ForeignKey(
+        Answer, on_delete=models.CASCADE, blank=True
+    )
+    author = models.CharField(max_length=60, verbose_name='автор')
+    body = models.TextField(verbose_name='комментарий')
+    create_on = models.DateTimeField(auto_now_add=True, verbose_name='создан')
+    update_on = models.DateTimeField(auto_now=True, verbose_name='обновлен')
+
+    def __str__(self):
+        return self.author

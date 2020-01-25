@@ -7,6 +7,6 @@ urlpatterns = [
     path('new/', views.question_new, name="new_question"),
     path('<int:id>/', views.question_detail,
          name='detail'),
-    path('<slug:tags_name>/', views.questions_list,
+    path('tag/<slug:tags_name>/', views.questions_list,
          name='forum_for_tag'),
 ]
