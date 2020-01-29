@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Comment, Answer
+from .models import Question,  Answer
 from .models import GetTagListMixin
 
 
@@ -11,5 +11,4 @@ class QuestionAdmin(admin.ModelAdmin, GetTagListMixin):
     ]
 
 
-admin.site.register(Comment)
 admin.site.register(Answer)

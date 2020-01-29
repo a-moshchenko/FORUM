@@ -1,0 +1,57 @@
+* {
+	color: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+
+
+body {
+    font-family: 'Nunito', sans-serif;
+	background-color: #44b78b;
+}
+
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: auto; 	
+}
+
+
+/* Header */
+
+.header {
+	height: 60px;
+	background-color: #0c4b33;
+}
+
+.header-inner {
+	display:  flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	position: relative;
+}
+
+.header-logo {
+	font-family: 'Roboto', sans-serif;
+	font-size: 45px;
+	vertical-align: m
+}
+
+
+/* Nav */
+
+.nav {
+	display: flex;
+	justify-content: space-around;
+}
+
+
+
+
+

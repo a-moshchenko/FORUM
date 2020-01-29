@@ -76,21 +76,3 @@ class Answer(models.Model):
 
     def __str__(self):
         return f' ответ {self.author}'
-
-
-class Comment(models.Model):
-    comment = models.ForeignKey('self', on_delete=models.CASCADE, blank=True,
-                                related_name='comment_for_self')
-    question = models.ForeignKey(
-        Question, on_delete=models.CASCADE, blank=True
-    )
-    answer = models.ForeignKey(
-        Answer, on_delete=models.CASCADE, blank=True
-    )
-    author = models.CharField(max_length=60, verbose_name='автор')
-    body = models.TextField(verbose_name='комментарий')
-    create_on = models.DateTimeField(auto_now_add=True, verbose_name='создан')
-    update_on = models.DateTimeField(auto_now=True, verbose_name='обновлен')
-
-    def __str__(self):
-        return self.author
