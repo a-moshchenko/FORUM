@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from .models import Book
+from django.views.generic import ListView
 
 
-def get_book_list(request):
-    books = Book.objects.all()
-    return render(request, 'book/home.html', {'books': books})
+class BookListView(ListView):
+    template_name = 'book/home.html'
+    queryset = Book.objects.all()
+    context_object_name = 'books'

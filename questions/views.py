@@ -1,29 +1,36 @@
-from django.shortcuts import render, redirect
+
 from .models import Question
-from django.shortcuts import get_object_or_404
-from django.db.models import F
 from .forms import CreatedQuestionsForm
 
-
-def questions_list(request, tags_name=None):
-    question_list = Question.objects.all()
-    if tags_name:
-        question_list = Question.objects.filter(tags__name__in=[tags_name])
-    return render(request, 'questions/forum.html', {'qq': question_list})
+from django.shortcuts import render, redirect
+from django.views.generic import View, ListView, DetailView
 
 
-def question_detail(request, id):
-    question = get_object_or_404(Question, id=id)
-    Question.objects.filter(id=question.id).update(views=F('views') + 1)
-    return render(request, 'questions/detail.html', {'question': question})
+class QuestionListView(ListView):
+    context_object_name = 'Questions_list'
+    template_name = 'questions/forum.html'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get('slug')
+        if not tag_slug:
+            return Question.objects.all()
+        return Question.objects.filter(tags__name=tag_slug)
 
 
-def question_new(request):
-    if request.method == 'POST':
+class QuestionDetailView(DetailView):
+    model = Question
+    pk_url_kwarg = 'id'
+    template_name = 'questions/detail.html'
+
+
+class QuestionNew(View):
+
+    def post(self, request):
         form = CreatedQuestionsForm(request.POST)
         if form.is_valid():
             question = form.save()
         return redirect('detail', question.id)
-    else:
+
+    def get(self, request):
         form = CreatedQuestionsForm()
-    return render(request, 'questions/new.html', {'form': form})
+        return render(request, 'questions/new.html', {'form': form})

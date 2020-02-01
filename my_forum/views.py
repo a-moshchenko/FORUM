@@ -1,32 +1,27 @@
-from django.shortcuts import render
 from .models import ForumPost, Theme
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, DetailView
 
 
-def postlist(request, theme_slug=None):
-    theme = None
-    themes = Theme.objects.all()
-    posts = ForumPost.objects.filter(status=1).order_by('-created')
-    if theme_slug:
-        theme = get_object_or_404(Theme, slug=theme_slug)
-        posts = posts.filter(theme=theme)
-    return render(request, 'blog/post_list.html', {'posts': posts,
-                                                   'themes': themes,
-                                                   'theme': theme})
+class PostListView(ListView):
+    context_object_name = 'posts'
+    template_name = 'blog/post_list.html'
+
+    def get_queryset(self):
+        queryset = ForumPost.objects.filter(status=1).order_by('-created')
+        theme_slug = self.kwargs.get('slug')
+        query = self.request.GET.get('q')
+        if query:
+            return ForumPost.objects.filter(
+                Q(title__icontains=query) | Q(content__icontains=query))
+        elif theme_slug:
+            theme = Theme.objects.get(slug=theme_slug)
+            return queryset.filter(theme=theme)
+        return queryset
 
 
-def search_result_view(request):
-    query = request.GET.get('q')
-    object_list = ForumPost.objects.filter(
-        Q(title__icontains=query) | Q(content__icontains=query))
-    context = {
-        'object_list': object_list
-        }
-
-    return render(request, 'blog/search_results.html', context)
-
-
-def post_detail(request, slug):
-    post = get_object_or_404(ForumPost, slug=slug)
-    return render(request, 'blog/detail.html', {'post': post})
+class PostDetailView(DetailView):
+    model = ForumPost
+    template_name = 'blog/detail.html'
+    slug_field = 'slug'
+    context_object_name = 'post'

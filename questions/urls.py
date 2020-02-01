@@ -3,10 +3,10 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.questions_list, name='forum'),
-    path('new/', views.question_new, name="new_question"),
-    path('<int:id>/', views.question_detail,
+    path('', views.QuestionListView.as_view(), name='forum'),
+    path('new/', views.QuestionNew.as_view(), name="new_question"),
+    path('<int:id>/', views.QuestionDetailView.as_view(),
          name='detail'),
-    path('tag/<slug:tags_name>/', views.questions_list,
+    path('tag/<slug:slug>/', views.QuestionListView.as_view(),
          name='forum_for_tag'),
 ]

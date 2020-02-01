@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'contacts',
     'questions',
     # instaled
-    'taggit',
 ]
 
 MIDDLEWARE = [
