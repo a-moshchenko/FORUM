@@ -3,28 +3,19 @@
 
 {% block content %}
 
+<div class="container-1">
 
         {% for post in posts %}
-        <div class="grid-item">
-        <div class="post">
-        <div class="post-image">
-          <img src="{{ post.image.url }}" width="100" alt="">
-        </div>
-        <div class="post-info">
+    <div class="box">
+
+          <img src="{{ post.image.url }}" width="380" height="200" alt="">
+
           <h1>{{post.title}}</h1>
-          <h6>{{post.created}}</h6>
-          <h3>{{post.content}}</h3>
-          <div class="tag">
+          <h3>{{post.content|slice:":100"}} ...</h3>
             <a href="{{post.theme.get_absolute_url}}">#{{post.theme}}</a>
-          </div>
-          <div class="post-read">
+
             <a href="{{post.get_absolute_url}}">далее </a>
-          </div>
         </div>
-
-        </div>
-
-
-    </div>
     {% endfor %}
+</div>
     {% endblock %}

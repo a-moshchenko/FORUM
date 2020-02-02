@@ -9,7 +9,7 @@ class Tags(models.Model):
     slug = models.SlugField(max_length=50)
 
     def get_absolut_url(self):
-        return reverse('forum_for_tag', args=[self.name])
+        return reverse('forum_for_tag', args=[self.slug])
 
     def __str__(self):
         return self.name
