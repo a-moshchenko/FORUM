@@ -1,46 +1,47 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Форум{% endblock title %}
+
 {% block content %}
+<div class="container">
+<a class="mt-4 p-0 btn btn-primary" href="{% url 'new_question' %}">Задать вопрос</a>
+
 {% for q in Questions_list %}
-<div class="question">
-    <div class="question-content-box">
-        <div class="question-author">
-            <h5>{{q.author}}</h5>
-
-        </div>
-        <div class="question-author-avatar">
-            <img src="{% static 'ava.jpg' %}" width="90" alt="">
-
-        </div>
-        <div class="question-content">
-            <div class="question-name">
-                <a href="{{ q.get_absolute_url }}"><h1>{{q.name}}</h1></a>
-
-            </div>
-            <h6>Опубликован{{q.time_since_publication}} назад</h6>
-            <h5>{{q.body}}</h5>
-        </div>
-        <div class="question-other">
-
-        <p>
-        <h6>{{q.likes}} лайков</h6>
-        <a href="#">Like</a>
-        </p>
-        <h5>{{q.views}}</h5>
-        </div>
-        <div class="question-items">
-            <div class="question-tags">
-            {% for tag in q.tags.all %}
-                <a name="tag" href="{{ tag.get_absolut_url }}">{{tag}}</a>
-            {% endfor %}
-            </div>
-            <div class="question-add">
-                <a href="{% url 'new_question' %}">new</a>
-            </div>
-        </div>
-
-    </div>
+<div class="mt-4 card">
+  <div class="pb-0 card-header">
+    <a href="{{ q.get_absolute_url }}"><p>{{q.author}}</p></a>
+  </div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      <p>{{q.name}}</p>
+      {% for tag in q.tags.all %}
+      <a name="tag" href="{% url 'forum_for_tag' tag.slug%}">#{{tag}}</a>
+      {% endfor %}
+      <footer class="blockquote-footer">Опубликован{{q.time_since_publication}} назад</footer>
+    </blockquote>
+  </div>
 </div>
 {% endfor %}
+</div>
 {% endblock content %}
+
+
+
+<div class="row">
+  <p>Опубликован{{q.time_since_publication}} назад</p>
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+        </span>
+        <p>{{q.author}}</p>
+        <p>{{q.body}}</p>
+      </div>
+      <div class="card-action">
+        <a href="#">{{q.likes}}</a>
+        <a href="#">{{q.views}}</a>
+      </div>
+    </div>
+  </div>
+</div>

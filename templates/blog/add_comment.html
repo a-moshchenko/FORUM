@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить комментарий{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <form  method="POST">{% csrf_token %}
+      <div class="form-group">
+        {% if not user.is_authenticated %}
+        <p><label for="id_author">Автор:</label> <input class="form-control" type="text" name="author" maxlength="50" required id="id_author"></p>
+        {% endif %}
+        <p><label for="id_body">Комментарий:</label> <textarea class="form-control" name="body" cols="40" rows="10" required id="id_body">
+        </textarea></p>
+        <button class="btn btn-primary" type="submit" name="button">Готово</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

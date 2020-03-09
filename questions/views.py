@@ -1,11 +1,14 @@
-
-from .models import Question
+from django.urls import reverse_lazy
+from .models import Question, Answer
 from .forms import CreatedQuestionsForm
 from django.http import Http404
 from django.db.models import F
 
-from django.shortcuts import render, redirect
-from django.views.generic import View, ListView, DetailView
+from django.views.generic import (ListView,
+                                  DetailView,
+                                  CreateView,
+                                  UpdateView,
+                                  DeleteView)
 
 
 class QuestionListView(ListView):
@@ -16,7 +19,7 @@ class QuestionListView(ListView):
         tag_slug = self.kwargs.get('slug')
         if not tag_slug:
             return Question.objects.all()
-        return Question.objects.filter(tags__name=tag_slug)
+        return Question.objects.filter(tags__slug__in=[tag_slug])
 
 
 class QuestionDetailView(DetailView):
@@ -37,14 +40,30 @@ class QuestionDetailView(DetailView):
         return obj
 
 
-class QuestionNew(View):
+class CreateQuestionView(CreateView):
+    template_name = 'questions/new.html'
+    form_class = CreatedQuestionsForm
 
-    def post(self, request):
-        form = CreatedQuestionsForm(request.POST)
-        if form.is_valid():
-            question = form.save()
-        return redirect('detail', question.id)
 
-    def get(self, request):
-        form = CreatedQuestionsForm()
-        return render(request, 'questions/new.html', {'form': form})
+class UpdateQuestionView(UpdateView):
+    template_name = 'questions/update.html'
+    model = Question
+    form_class = CreatedQuestionsForm
+    pk_url_kwarg = 'id'
+
+
+class DeleteQuestionView(DeleteView):
+    model = Question
+    pk_url_kwarg = 'id'
+    success_url = reverse_lazy('forum')
+
+
+class CreateAnswerView(CreateView):
+    model = Answer
+    fields = ['author', 'image', 'code']
+    template_name = 'answer/create_answer.html'
+    success_url = reverse_lazy('forum')
+
+    def form_valid(self, form):
+        form.instance.question_id = self.kwargs.get('id')
+        return super(CreateAnswerView, self).form_valid(form)

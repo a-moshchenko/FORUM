@@ -1,6 +1,9 @@
-from .models import ForumPost, Theme
+from .models import ForumPost, Theme, PostComment
 from django.db.models import Q
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from rest_framework import generics
+from .serializers import PostSerializer
+from django.urls import reverse_lazy
 
 
 class PostListView(ListView):
@@ -25,3 +28,26 @@ class PostDetailView(DetailView):
     template_name = 'blog/detail.html'
     slug_field = 'slug'
     context_object_name = 'post'
+
+
+class CommentCreateView(CreateView):
+    model = PostComment
+    fields = ['body']
+    template_name = 'blog/add_comment.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        slug = self.kwargs.get('slug')
+        if not self.request.user.is_authenticated:
+            obj.author = self.request.POST.get('author')
+        else:
+            obj.author = self.request.user.name
+        obj.post = ForumPost.objects.get(slug=slug)
+        obj.save()
+        return super(CommentCreateView, self).form_valid(form)
+
+
+class ForumPostsApiView(generics.ListAPIView):
+    queryset = ForumPost.objects.all()
+    serializer_class = PostSerializer

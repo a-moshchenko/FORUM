@@ -3,41 +3,60 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>forum</title>
-<link href="https://fonts.googleapis.com/css?family=Nunito|Roboto:900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'css/master.css' %}">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-reboot.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     </head>
     <body>
-        <header class="header">
-        <div class="container">
-          <div class="header-inner">
-            <div class="header-logo">
-            <a href="{% url 'home' %}">Hello Django<a/>
-            </div>
-                <nav class="nav">
-                  <a class="nav-link" href="{% url 'home' %}" >Блог</a>
-                  <a class="nav-link" href="{% url 'forum' %}" >Форум</a>
-                  <a class="nav-link" href="{% url 'books' %}" >Книги</a>
-                  <a class="nav-link" href="{% url 'contacts' %}" >Контакты</a>
-                </nav>
-                <div class="search">
-                <form action="{% url 'search' %}" method="get">
-                  <input type="text" placeholder="Поиск..." name="q">
-                </form>
-              </div>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Hello Django</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  <div class="collapse navbar-collapse">
+    <ul class="nav justify-content-end">
+      <li class="nav-item"><a class="nav-link" href="{% url 'home' %}" >Блог</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'forum' %}" >Форум</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'books' %}" >Книги</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'contacts' %}" >Контакты</a></li>
+      {% if user.is_authenticated %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" >Выйти</a></li>
+      {% else %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'login' %}" >Войти</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}" >Регистрация</a></li>
+      {% endif %}
+    </ul>
+  </div>
+      <div class="d-flex justify-content-end">
 
-              </div>
-            </div>
-      </header>
+    <form action="{% url 'search' %}" class="form-inline">
+      <input class="form-control mr-sm-2" type="text" placeholder="Поиск" aria-label="Поиск" name="q">
+      <button class="btn btn-primary" type="submit">Поиск</button>
+    </form>
+    </div>
+</nav>
 
-
+<div class="container">
 
       <div class="intro">
-        <div class="container">
+          <div class="row">
 
         {% block content %}
         {% endblock %}
     </div>
   </div>
+</div>
     </body>
+    <footer>
+      <!-- Compiled and minified JavaScript -->
+      <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    </footer>
 </html>

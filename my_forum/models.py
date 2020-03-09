@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
+from users.models import CustomUser
 
 
 STATUS = (
@@ -26,7 +26,7 @@ class Theme(models.Model):
 
 
 class ForumPost(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE,
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE,
                                related_name='post_author',
                                verbose_name='автор')
     theme = models.ForeignKey(Theme, null=True, on_delete=models.PROTECT,
@@ -50,3 +50,20 @@ class ForumPost(models.Model):
         verbose_name = 'пост'
         verbose_name_plural = 'посты'
         ordering = ['-created']
+
+
+class PostComment(models.Model):
+    post = models.ForeignKey(ForumPost, verbose_name='Пост',
+                             on_delete=models.CASCADE,
+                             related_name='comments')
+    author = models.CharField(max_length=50, verbose_name='Автор')
+    body = models.TextField(verbose_name='Комментарий')
+    created = models.DateTimeField(auto_now=True, verbose_name='создан')
+    update = models.DateTimeField(auto_now_add=True, verbose_name='изменен')
+
+    def __str__(self):
+        return f'{self.author}'
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'комментарии'

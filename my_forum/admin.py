@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ForumPost, Theme
+from .models import ForumPost, Theme, PostComment
 from django.utils.safestring import mark_safe
 
 
@@ -25,3 +25,6 @@ class AdminForumPost(admin.ModelAdmin):
 @admin.register(Theme)
 class ThemeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+
+
+admin.site.register(PostComment)

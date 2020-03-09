@@ -1,30 +1,18 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
-
-
-class Tags(models.Model):
-    name = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50)
-
-    def get_absolut_url(self):
-        return reverse('forum_for_tag', args=[self.slug])
-
-    def __str__(self):
-        return self.name
+from taggit.managers import TaggableManager
 
 
 class Question(models.Model):
     name = models.CharField(max_length=100, verbose_name='вопрос')
     body = models.TextField(verbose_name='описание')
-    author = models.ForeignKey(User, on_delete=models.CASCADE,
-                               verbose_name='автор')
+    author = models.CharField(max_length=50, verbose_name='автор')
     likes = models.IntegerField(default=0, verbose_name='лайки')
     views = models.PositiveIntegerField(verbose_name='просмотры', default=0)
     created = models.DateTimeField(auto_now_add=True, verbose_name='создан')
     updated = models.DateTimeField(auto_now=True,)
-    tags = models.ManyToManyField(Tags, blank=True)
+    tags = TaggableManager()
 
     class Meta:
         ordering = ['-created']
@@ -66,9 +54,10 @@ class Question(models.Model):
 class Answer(models.Model):
     author = models.CharField(max_length=60, verbose_name='автор')
     question = models.ForeignKey(Question, on_delete=models.CASCADE,
-                                 verbose_name='вопрос')
-    code = models.TextField(verbose_name='пример кода', blank=True)
-    image = models.ImageField(upload_to='answer_img')
+                                 verbose_name='вопрос', related_name='answers')
+    code = models.TextField(verbose_name='пример кода')
+    image = models.ImageField(upload_to='answer_img', blank=True,
+                              null=True, verbose_name='картинка')
     create_on = models.DateTimeField(auto_now_add=True, verbose_name='создан')
     update_on = models.DateTimeField(auto_now=True, verbose_name='обновлен')
 
