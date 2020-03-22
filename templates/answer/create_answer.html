@@ -3,12 +3,15 @@
 {% block title %}Добавить ответ{% endblock title %}
 
 {% block content %}
-
-<form enctype="multipart/form-data" method="POST">{% csrf_token %}
-  <p><label for="id_author">Автор:</label> <input class="form-control" type="text" name="author" maxlength="60" required id="id_author"></p>
-  <p><label for="id_image">Картинка:</label> <input class="form-control" type="file" name="image" accept="image/*" id="id_image"></p>
-  <p><label for="id_code">Пример кода:</label> <textarea class="form-control" name="code" cols="40" rows="10" required id="id_code">
-  </textarea></p>
-  <button type="submit" name="button">Готово</button>
-</form>
+<div class="container">
+    <form enctype="multipart/form-data" method="POST">
+      {% csrf_token %}
+      {% if not user.is_authenticated %}
+      <p><label for="id_author">Автор:</label> <input class="form-control" type="text" name="author" maxlength="60" required id="id_author"></p>
+      {% endif %}
+      <p><label for="id_body">Ответ:</label> <textarea class="form-control" name="body" cols="40" rows="10" required id="id_body">
+      </textarea></p>
+      <button type="submit" name="button">Готово</button>
+    </form>
+</div>
 {% endblock %}

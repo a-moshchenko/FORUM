@@ -20,6 +20,13 @@
       {% endfor %}
       <footer class="blockquote-footer">Опубликован{{q.time_since_publication}} назад</footer>
     </blockquote>
+    <div class="d-flex justify-content-end">
+      <div class="">
+      <img src="{% static "/eye.png" %}" alt="">  {{q.views}}
+      <img src="{% static "/view1.png" %}" alt="">  {{q.likes.count}}
+      <img src="{% static "/faq.png" %}" alt="">  {{q.answers.count}}
+    </div>
+      </div>
   </div>
 </div>
 {% endfor %}

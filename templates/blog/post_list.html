@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Блог{% endblock title %}
 
@@ -17,6 +18,9 @@
 
         <div class="d-flex justify-content-between">
           <a href="{{post.theme.get_absolute_url}}" class="badge badge-light">#{{post.theme}}</a>
+          <div class="">
+            <img src="{% static "/comment.png" %}" alt="">  {{post.comments.count}}
+          </div>
           <a href="{{post.get_absolute_url}}" class="badge badge-primary">далее</a>
       </div>
       </div>

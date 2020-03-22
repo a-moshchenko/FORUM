@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить вопрос{% endblock title %}
+
+{% block content %}
+<div class="container">
+<form class="" method="POST">{% csrf_token %}
+    <div class="form-group">
+      {{form.as_p}}
+        <button class="btn btn-primary" type="submit" name="button">Готово</button>
+      </div>
+</form>
+</div>
+{% endblock %}

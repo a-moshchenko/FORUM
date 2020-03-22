@@ -22,7 +22,7 @@
       <li class="nav-item"><a class="nav-link" href="{% url 'home' %}" >Блог</a></li>
       <li class="nav-item"><a class="nav-link" href="{% url 'forum' %}" >Форум</a></li>
       <li class="nav-item"><a class="nav-link" href="{% url 'books' %}" >Книги</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'contacts' %}" >Контакты</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'contacts' %}" >О сайте</a></li>
       {% if user.is_authenticated %}
       <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" >Выйти</a></li>
       {% else %}
@@ -39,8 +39,8 @@
     </form>
     </div>
 </nav>
-
 <div class="container">
+
 
       <div class="intro">
           <div class="row">

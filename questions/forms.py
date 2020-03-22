@@ -11,4 +11,4 @@ class CreatedQuestionsForm(forms.ModelForm):
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
-        fields = ['author', 'code', 'image']
+        fields = ['author', 'body']

@@ -26,6 +26,7 @@ class QuestionDetailView(DetailView):
     model = Question
     pk_url_kwarg = 'id'
     template_name = 'questions/detail.html'
+    likes = False
 
     def get_object(self, queryset=None):
         pk = self.kwargs.get(self.pk_url_kwarg)
@@ -41,12 +42,23 @@ class QuestionDetailView(DetailView):
 
 
 class CreateQuestionView(CreateView):
-    template_name = 'questions/new.html'
-    form_class = CreatedQuestionsForm
+    model = Question
+    fields = ['name', 'body', 'tags']
+    template_name = 'questions/create_question.html'
+    success_url = reverse_lazy('forum')
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        if not self.request.user.is_authenticated:
+            obj.author = self.request.POST.get('author')
+        else:
+            obj.author = self.request.user.name
+        obj.save()
+        return super(CreateQuestionView, self).form_valid(form)
 
 
 class UpdateQuestionView(UpdateView):
-    template_name = 'questions/update.html'
+    template_name = 'questions/update_question.html'
     model = Question
     form_class = CreatedQuestionsForm
     pk_url_kwarg = 'id'
@@ -60,10 +72,17 @@ class DeleteQuestionView(DeleteView):
 
 class CreateAnswerView(CreateView):
     model = Answer
-    fields = ['author', 'image', 'code']
+    fields = ['body']
     template_name = 'answer/create_answer.html'
     success_url = reverse_lazy('forum')
 
     def form_valid(self, form):
-        form.instance.question_id = self.kwargs.get('id')
+        obj = form.save(commit=False)
+        id = self.kwargs.get('id')
+        if not self.request.user.is_authenticated:
+            obj.author = self.request.POST.get('author')
+        else:
+            obj.author = self.request.user.name
+        obj.question = Question.objects.get(id=id)
+        obj.save()
         return super(CreateAnswerView, self).form_valid(form)

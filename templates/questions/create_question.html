@@ -7,10 +7,12 @@
 <form class="" method="POST">{% csrf_token %}
     <div class="form-group">
       <p><label for="id_name">Вопрос:</label> <input class="form-control" type="text" name="name" maxlength="100" required id="id_name"></p>
+      {% if not user.is_authenticated %}
       <p><label for="id_author">Автор:</label> <input class="form-control" type="text" name="author" maxlength="50" required id="id_author"></p>
+      {% endif %}
       <p><label for="id_body">Описание:</label> <textarea class="form-control" name="body" cols="40" rows="10" required id="id_body">
         </textarea></p>
-      <p><label for="id_tags">Tags:</label> <input class="form-control" type="text" name="tags" required id="id_tags">
+      <p><label for="id_tags">Теги:</label> <input class="form-control" type="text" name="tags" required id="id_tags">
         <small id="emailHelp" class="form-text text-muted">несколько тегов через запятую</small></p>
         <button class="btn btn-primary" type="submit" name="button">Готово</button>
       </div>

@@ -55,9 +55,7 @@ class Answer(models.Model):
     author = models.CharField(max_length=60, verbose_name='автор')
     question = models.ForeignKey(Question, on_delete=models.CASCADE,
                                  verbose_name='вопрос', related_name='answers')
-    code = models.TextField(verbose_name='пример кода')
-    image = models.ImageField(upload_to='answer_img', blank=True,
-                              null=True, verbose_name='картинка')
+    body = models.TextField(verbose_name='пример кода')
     create_on = models.DateTimeField(auto_now_add=True, verbose_name='создан')
     update_on = models.DateTimeField(auto_now=True, verbose_name='обновлен')
 
