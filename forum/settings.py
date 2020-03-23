@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'contacts',
     'questions',
     'users',
+    'like',
     # instaled
     'taggit',
     'rest_framework',

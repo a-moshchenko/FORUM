@@ -26,6 +26,7 @@ urlpatterns = [
     path('questions/', include('questions.urls')),
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
+    path('like/', include('like.urls')),
 
 ]
 

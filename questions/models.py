@@ -2,13 +2,15 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from taggit.managers import TaggableManager
+from django.contrib.contenttypes.fields import GenericRelation
+from like.models import Like
 
 
 class Question(models.Model):
     name = models.CharField(max_length=100, verbose_name='вопрос')
     body = models.TextField(verbose_name='описание')
     author = models.CharField(max_length=50, verbose_name='автор')
-    likes = models.IntegerField(default=0, verbose_name='лайки')
+    likes = GenericRelation(Like)
     views = models.PositiveIntegerField(verbose_name='просмотры', default=0)
     created = models.DateTimeField(auto_now_add=True, verbose_name='создан')
     updated = models.DateTimeField(auto_now=True,)
@@ -21,6 +23,10 @@ class Question(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
 
     def get_absolute_url(self):
         return reverse('detail', args=[self.id])
